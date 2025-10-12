@@ -1,21 +1,28 @@
-/* Home.module.css */
-
 /* Outer container */
 .main {
   height: 100vh;
+  width: 100vw;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  background-image: url('../../public/vite.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  /* background: linear-gradient(135deg, #c3ecf8, #fcb3f3); */
+  background-color: #6b63ffa8;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Left image section */
+.imgs {
+  width: 40%;
+  height: 100%;
+  background-image: url('/CHIT_CHAT.png'); /* Assuming image is in public folder */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 /* Inner content box */
 .container {
   background-color: #ec555593;
+  width: 60%;
   padding: 40px 50px;
   border-radius: 16px;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
@@ -25,14 +32,14 @@
 }
 
 /* Heading */
-.container h2 {
+.heading {
   font-size: 26px;
   margin-bottom: 25px;
   color: #333333;
 }
 
 /* Button styling */
- button {
+.button {
   padding: 12px 30px;
   font-size: 16px;
   border: none;
@@ -43,7 +50,7 @@
   transition: all 0.3s ease;
 }
 
-button:hover {
+.button:hover {
   background-color: #5548d9;
   transform: scale(1.05);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
