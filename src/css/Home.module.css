@@ -1,0 +1,50 @@
+/* Home.module.css */
+
+/* Outer container */
+.main {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../../public/vite.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background: linear-gradient(135deg, #c3ecf8, #fcb3f3); */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Inner content box */
+.container {
+  background-color: #ec555593;
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+/* Heading */
+.container h2 {
+  font-size: 26px;
+  margin-bottom: 25px;
+  color: #333333;
+}
+
+/* Button styling */
+ button {
+  padding: 12px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #6c63ff;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #5548d9;
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}

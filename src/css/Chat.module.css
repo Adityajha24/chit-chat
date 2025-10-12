@@ -1,0 +1,165 @@
+#main {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  background-color: rgba(255, 136, 0, 0.678);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-family: sans-serif;
+}
+
+/* Left: User List + Logo */
+#users {
+  width: 30%;
+  min-width: 250px;
+  background-color: rgba(255, 255, 255, 0.08);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+:global(.slide-image) {
+  width: 33%;
+  max-width: 200px;
+  transform: translateX(-150%);
+  opacity: 0;
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+:global(body.loaded) :global(.slide-image) {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+/* User List */
+.userList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user {
+  width: 220px;
+  padding: 10px 15px;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: rgba(255, 0, 0, 0.447);
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+  transition: background 0.3s;
+  text-align: center;
+}
+
+.user:hover {
+  background-color: rgba(255, 0, 0, 0.753);
+}
+
+/* Right: Chat Area */
+#card {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 0 16px 16px 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Chat container */
+#chat {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Friend header */
+#friend {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 0;
+  text-align: center;
+}
+
+/* Message display area */
+#msgs {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 400px;
+  width: 100%;
+}
+
+/* Message input */
+#sender {
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputField {
+  height: 45px;
+  width: 95%;
+  border: none;
+  font-size: 16px;
+  padding: 0 12px;
+  border-radius: 10px;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+.inputField::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.inputField:focus {
+  background-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4);
+}
+
+/* Messages */
+/* Style for messages sent by current user */
+.senderMsg {
+  background-color: rgba(0, 123, 255, 0.3); /* light blue */
+  color: white;
+  padding: 8px 12px;
+  border-radius: 12px;
+  margin: 5px 0;
+  display: inline-block;
+  max-width: 70%;
+  align-self: flex-end;
+}
+
+/* Style for messages received from friend */
+.receiverMsg {
+  background-color: rgba(255, 255, 255, 0.2); /* light gray */
+  color: white;
+  padding: 8px 12px;
+  border-radius: 12px;
+  margin: 5px 0;
+  display: inline-block;
+  max-width: 70%;
+  align-self: flex-start;
+}
