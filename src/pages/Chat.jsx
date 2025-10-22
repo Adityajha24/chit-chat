@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import chatStyle from '../css/Chat.module.css';
 import axios from 'axios';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function Chat(props) {
   const [users, setUsers] = useState([]);
@@ -8,6 +9,7 @@ function Chat(props) {
   const [receiver, setReceiver] = useState('');
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
+  const [hoverIndex, setHoverIndex] = useState(null);
 
   const sender = props.useremail;
 
@@ -31,49 +33,44 @@ function Chat(props) {
   // Fetch messages (polling every 2 seconds)
   useEffect(() => {
     let interval;
-
     if (receiver) {
-      fetchMessages(); // initial fetch
+      fetchMessages();
       interval = setInterval(fetchMessages, 2000);
     }
-
     return () => clearInterval(interval);
   }, [receiver]);
 
-  // Fetch messages between sender and receiver
   const fetchMessages = () => {
     if (!sender || !receiver) return;
-
     axios.post(`http://localhost:8080/check-msg?sender=${sender}&receiver=${receiver}`)
       .then((res) => {
         setMessages(res.data);
       });
   };
 
-  // Send message
   const sendMessage = () => {
     if (message.trim() === '' || !receiver) return;
 
     const time = `${new Date().getHours()} : ${new Date().getMinutes()}`;
-
     axios.post(`http://localhost:8080/send-msg?sender=${sender}&receiver=${receiver}&msg=${message}&time=${time}`)
       .then(() => {
         setMessage('');
-        fetchMessages(); // update messages immediately after sending
+        fetchMessages();
       });
+  };
+
+   // ✅ DELETE MESSAGE HANDLER (LOCAL)
+  const onDelete = (indexToDelete) => {
+    axios.post(`http://localhost:8080/deletemessage?id=${indexToDelete}`)
+
+    // console.log(indexToDelete);
   };
 
   return (
     <div id={chatStyle.main}>
-
-      {/* Sidebar with image and user list */}
+      {/* Sidebar with logo and users */}
       <div id={chatStyle.users}>
-        <img
-          src="/CHIT_CHAT.png"
-          alt="Logo"
-          className="slide-image"
-        />
-
+        <img src="/CHIT_CHAT.png" alt="Logo" className="slide-image" />
         <div id={chatStyle.userss}>
           <ul className={chatStyle.userList}>
             {users.map((user, index) => (
@@ -98,28 +95,56 @@ function Chat(props) {
 
           {/* Friend Name */}
           <div id={chatStyle.friend}>
-            {friend && <><strong>{friend}</strong><hr /></>}
+            {friend && (
+              <>
+                <strong>{friend}</strong>
+                <hr />
+              </>
+            )}
           </div>
 
           {/* Messages */}
           <div id={chatStyle.msgs}>
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                style={{
-                  display: 'flex',
-                  justifyContent: msg.sender === sender ? 'flex-end' : 'flex-start'
-                }}
-              >
-                <p className={msg.sender === sender ? chatStyle.senderMsg : chatStyle.receiverMsg}>
-                  {msg.msg}
-                </p>
-              </div>
-            ))}
+            {messages.map((msg, index) => {
+              const isSender = msg.sender === sender;
+              const isHovered = hoverIndex === index;
+
+              return (
+                <div
+                  key={index}
+                  onMouseEnter={() => setHoverIndex(index)}
+                  onMouseLeave={() => setHoverIndex(null)}
+                  style={{
+                    display: 'flex',
+                    justifyContent: isSender ? 'flex-end' : 'flex-start',
+                    padding: '0.5rem',
+                  }}
+                >
+                  <div className={chatStyle.msgWrapper}>
+                    {/* Message Bubble */}
+                    <p
+                      className={`${isSender ? chatStyle.senderMsg : chatStyle.receiverMsg} ${
+                        isSender && isHovered ? chatStyle.hovered : ''
+                      }`}
+                    >
+                      {msg.msg}
+                    </p>
+
+                    {/* Delete Icon (only for sender and on hover) */}
+                    {isSender && isHovered && (
+                      <i
+                        className={`bi bi-trash ${chatStyle.deleteIcon}`}
+                        onClick={() => onDelete(msg.id)}
+                        title="Delete message"
+                      ></i>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
-
-          {/* Input */}
+          {/* Message Input */}
           <div id={chatStyle.sender}>
             <input
               type="text"
@@ -127,14 +152,11 @@ function Chat(props) {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  sendMessage();
-                }
+                if (e.key === 'Enter') sendMessage();
               }}
               className={chatStyle.inputField}
             />
           </div>
-
         </div>
       </div>
     </div>

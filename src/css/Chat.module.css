@@ -154,9 +154,10 @@
   border-radius: 12px 12px 0 12px;
   margin: 5px 0;
   display: inline-block;
-  max-width: 70%;
+  max-width: 100%;
   align-self: flex-end;
   box-shadow: 0 0 8px rgba(0, 230, 118, 0.4);
+  transition: transform 0.2s ease;
 }
 
 .receiverMsg {
@@ -166,7 +167,36 @@
   border-radius: 12px 12px 12px 0;
   margin: 5px 0;
   display: inline-block;
-  max-width: 70%;
+  max-width: 100%;
   align-self: flex-start;
   box-shadow: 0 0 8px rgba(3, 169, 244, 0.3);
+}
+
+/* ✅ Hovered sender message slides left */
+.hovered {
+  transform: translateX(-30px);
+}
+
+/* ✅ Wrapper for message + delete icon */
+.msgWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* ✅ Trash icon styles */
+.deleteIcon {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #ff5252;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* ✅ Icon appears on message hover */
+.msgWrapper:hover .deleteIcon {
+  opacity: 1;
 }
